@@ -1,0 +1,166 @@
+extends layout
+
+block content
+  .row
+    .col-md-12
+      .card
+        .header
+          h4.title Tambah Makanan
+        .content
+          form(action="/api/foods", method="post", @submit.prevent="createFood")
+            .row
+              .col-md-6
+                .form-group
+                  label Nama
+                  input.form-control(type="text", v-model="newFood.name", placeholder="Nama")
+              .col-md-6
+                .form-group
+                  label Harga
+                  input.form-control(type="number", v-model="newFood.price", placeholder="Harga")
+
+            .row
+              .col-md-3
+                .form-group
+                  label Kalori
+                  input.form-control(type="number", step="0.01", v-model="newFood.calories", placeholder="Kalori")
+              .col-md-3
+                .form-group
+                  label Lemak
+                  input.form-control(type="number", step="0.01", v-model="newFood.fat", placeholder="Lemak")
+              .col-md-3
+                .form-group
+                  label Karbohidrat
+                  input.form-control(type="number", step="0.01", v-model="newFood.carbohydrate", placeholder="Karbohidrat")
+              .col-md-3
+                .form-group
+                  label Protein
+                  input.form-control(type="number", step="0.01", v-model="newFood.protein", placeholder="Protein")
+
+            .row
+              .col-md-12
+                .form-group
+                  label Sumber
+                  input.form-control(v-model="newFood.source", placeholder="Sumber data nutrisi")
+
+            button.btn.btn-info.btn-block Submit
+
+  .row
+    .col-md-12
+      .card
+        .header
+          h4.title Daftar Makanan
+          p.category Daftar makanan beserta nutrisinya
+        .content.table-responsive.table-full-width
+          table.table.table-hover.table-striped
+            thead
+              th ID
+              th Nama
+              th Harga
+              th Kalori
+              th Lemak
+              th Karbohidrat
+              th Protein
+              th Sumber
+
+            tbody
+              tr(v-if="!loaded")
+                td(colspan=8, style="text-align: center")
+                  i.fa.fa-spinner.fa-spin.fa-3x.fa-fw
+              tr(v-if="foods.length === 0 && loaded")
+                td(colspan=8, style="text-align: center") Belum ada data makanan
+              tr(v-for="food in foods")
+                td {{ food._id }}
+                td {{ food.name }}
+                td {{ food.price }}
+                td {{ food.calories }}
+                td {{ food.fat }}
+                td {{ food.carbohydrate }}
+                td {{ food.protein }}
+                td
+                  a.btn.btn-secondary(:href="food.source")
+                    i.fa.fa-link
+
+block scripts
+  script.
+    new Vue({
+      el: '#app',
+      data: {
+        foods: [],
+        loaded: false,
+        newFood: {}
+      },
+      created() {
+        this.getFoods();
+      },
+      methods: {
+        getFoods() {
+          fetch(
+            '/api/foods'
+          )
+          .then((res) => {
+            return res.json();
+          })
+          .then((json) => {
+            if (json.err) {
+              notifyFail(json.err);
+            } else {
+              this.loaded = true;
+              this.foods = json;
+            }
+          });
+        },
+
+        createFood() {
+          fetch('/api/foods', {
+            method: 'post',
+            headers: {
+              'Accept': 'application/json',
+              'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(this.newFood)
+          })
+          .then((res) => {
+            return res.json();
+          })
+          .then((json) => {
+            if (json.err) {
+              this.notifyFail(json.err);
+            } else {
+              this.notifySuccess();
+
+              this.foods.push(json);
+              this.newFood = {};
+            }
+          });
+        },
+
+        notifySuccess() {
+          $.notify({
+            icon: 'fa fa-check',
+            message: 'Berhasil menambahkan makanan'
+          },{
+            placement: {
+              from: 'top',
+              align: 'center',
+            },
+            type: 'info',
+            delay: 3000
+          });
+        },
+
+        notifyFail(err) {
+          $.notify({
+            icon: 'fa fa-times',
+            message: err
+          },{
+            placement: {
+              from: 'top',
+              align: 'center',
+            },
+            type: 'danger',
+            delay: 3000,
+            mouse_over: 'pause'
+          });
+        }
+      }
+    });

@@ -1,0 +1,546 @@
+extends layout
+
+block content
+  .row(v-if="enabled.weights")
+    .col-lg-4
+      .card
+        .header
+          h4.title Pilihan
+        .content
+          form(@submit.prevent="getInitialData")
+            .row(v-for="field in fields")
+              .col-md-12
+                .form-group
+                  label {{ field.label }}
+                  select.form-control(v-model="weights[field.name]")
+                    option(value= 4 * (1/4)) Sangat Penting
+                    option(value= 3 * (1/4)) Penting
+                    option(value= 2 * (1/4)) Cukup Penting
+                    option(value= 1 * (1/4)) Tidak Penting
+                    option(value= 0 * (1/4)) Sangat Tidak Penting
+            button.btn.btn-primary.btn-block(v-if="!enabled.initialData") Submit
+
+    .col-lg-8(v-if="enabled.initialData")
+      .card
+        .header
+          h4.title Data Awal
+        .content.table-responsive.table-full-width
+          table.table.table-hover.table-striped
+            thead
+              th Nama
+              th Harga
+              th Kalori
+              th Lemak
+              th Karbohidrat
+              th Protein
+
+            tbody
+              tr(v-if="!loaded.initialData")
+                td(colspan=6, style="text-align: center")
+                  i.fa.fa-spinner.fa-spin.fa-3x.fa-fw
+              tr(v-if="initialData.length === 0 && loaded.initialData")
+                td(colspan=6, style="text-align: center") Belum ada data makanan
+              tr(v-for="data in initialData")
+                td {{ data.name }}
+                td {{ data.price }}
+                td {{ data.calories }}
+                td {{ data.fat }}
+                td {{ data.carbohydrate }}
+                td {{ data.protein }}
+
+          .footer(style="padding: 0px 15px 0px 15px")
+            button.btn.btn-primary.pull-left(@click="prev", v-if="!enabled.normalizedData") Prev
+            button.btn.btn-primary.pull-right(@click="getNormalizedData", v-if="!enabled.normalizedData && initialData.length > 0") Next
+          .clearfix
+
+  .row(v-if="enabled.normalizedData")
+    .col-md-12
+      .card
+        .header
+          h4.title Normalisasi Data Makanan
+          p.category Dilakukan normalisasi terhadap data awal
+        .content.table-responsive.table-full-width
+          table.table.table-hover.table-striped
+            thead
+              th Nama
+              th Harga
+              th Kalori
+              th Lemak
+              th Karbohidrat
+              th Protein
+
+            tbody
+              tr(v-if="!loaded.normalizedData")
+                td(colspan=6, style="text-align: center")
+                  i.fa.fa-spinner.fa-spin.fa-3x.fa-fw
+              tr(v-if="normalizedData.length === 0 && loaded.normalizedData")
+                td(colspan=6, style="text-align: center") Belum ada data makanan
+              tr(v-for="data in normalizedData")
+                td {{ data.name }}
+                td {{ data.price }}
+                td {{ data.calories }}
+                td {{ data.fat }}
+                td {{ data.carbohydrate }}
+                td {{ data.protein }}
+
+          .footer(style="padding: 0px 15px 0px 15px")
+            button.btn.btn-primary.pull-left(@click="prev", v-if="!enabled.weightedData") Prev
+            button.btn.btn-primary.pull-right(@click="getWeightedData", v-if="!enabled.weightedData") Next
+          .clearfix
+
+  .row(v-if="enabled.weightedData")
+    .col-md-12
+      .card
+        .header
+          h4.title Pembobotan
+          p.category Dilakukan pembobotan dengan mengkalikan bobot dengan data yang telah dinormalisasi
+        .content.table-responsive.table-full-width
+          table.table.table-hover.table-striped
+            thead
+              th Nama
+              th Harga
+              th Kalori
+              th Lemak
+              th Karbohidrat
+              th Protein
+
+            tbody
+              tr(v-if="!loaded.weightedData")
+                td(colspan=6, style="text-align: center")
+                  i.fa.fa-spinner.fa-spin.fa-3x.fa-fw
+              tr(v-if="weightedData.length === 0 && loaded.weightedData")
+                td(colspan=6, style="text-align: center") Belum ada data makanan
+              tr(v-for="data in weightedData")
+                td {{ data.name }}
+                td {{ data.price }}
+                td {{ data.calories }}
+                td {{ data.fat }}
+                td {{ data.carbohydrate }}
+                td {{ data.protein }}
+
+          .footer(style="padding: 0px 15px 0px 15px")
+            button.btn.btn-primary.pull-left(@click="prev", v-if="!enabled.idealSolutions") Prev
+            button.btn.btn-primary.pull-right(@click="getIdealSolutions", v-if="!enabled.idealSolutions") Next
+          .clearfix
+
+  .row(v-if="enabled.idealSolutions")
+    .col-md-6
+      .card
+        .header
+          h4.title Menentukan Solusi Ideal
+          p.category Menentukan solusi ideal positif dan negatif menggunakan nilai max dan min
+        .content.table-responsive.table-full-width
+          table.table.table-hover.table-striped
+            thead
+              th
+              th Solusi Ideal
+              th Positif
+              th Negatif
+
+            tbody
+              tr(v-if="!loaded.idealSolutions")
+                td(colspan=4, style="text-align: center")
+                  i.fa.fa-spinner.fa-spin.fa-3x.fa-fw
+              tr(v-if="idealSolutions.length === 0 && loaded.idealSolutions")
+                td(colspan=4, style="text-align: center") Belum ada data makanan
+              tr(v-for="data, i in idealSolutions")
+                td A{{ i + 1 }}
+                td [ {{ data.values.join('; ') }} ]
+                td {{ data.positive }}
+                td {{ data.negative }}
+
+          .footer(style="padding: 0px 15px 0px 15px")
+            button.btn.btn-primary.pull-left(@click="prev", v-if="!enabled.separationMeasures") Prev
+            button.btn.btn-primary.pull-right(@click="getSeparationMeasures", v-if="!enabled.separationMeasures") Next
+          .clearfix
+
+    .col-md-6(v-if="enabled.separationMeasures")
+      .card
+        .header
+          h4.title Menghitung Jarak Solusi Ideal
+          p.category Menghitung jarak solusi ideal positif dan negatif
+        .content.table-responsive.table-full-width
+          table.table.table-hover.table-striped
+            thead
+              th
+              th Positif
+              th Negatif
+
+            tbody
+              tr(v-if="!loaded.separationMeasures")
+                td(colspan=3, style="text-align: center")
+                  i.fa.fa-spinner.fa-spin.fa-3x.fa-fw
+              tr(v-if="separationMeasures.length === 0 && loaded.separationMeasures")
+                td(colspan=3, style="text-align: center") Belum ada data makanan
+              tr(v-for="data, i in separationMeasures")
+                td D{{ i + 1 }}
+                td {{ data.positive }}
+                td {{ data.negative }}
+
+          .footer(style="padding: 0px 15px 0px 15px")
+            button.btn.btn-primary.pull-left(@click="prev", v-if="!enabled.relativeCloseness") Prev
+            button.btn.btn-primary.pull-right(@click="getRelativeCloseness", v-if="!enabled.relativeCloseness") Next
+          .clearfix
+
+  .row(v-if="enabled.relativeCloseness")
+    .col-lg-3
+      .card
+        .header
+          h4.title Menghitung Nilai Preferensi
+          p.category Menghitung nilai preferensi untuk tiap alternatif
+        .content.table-responsive.table-full-width
+          table.table.table-hover.table-striped
+            thead
+              th
+              th Positif
+
+            tbody
+              tr(v-if="!loaded.relativeCloseness")
+                td(colspan=3, style="text-align: center")
+                  i.fa.fa-spinner.fa-spin.fa-3x.fa-fw
+              tr(v-if="relativeCloseness.length === 0 && loaded.relativeCloseness")
+                td(colspan=3, style="text-align: center") Belum ada data makanan
+              tr(v-for="data, i in relativeCloseness")
+                td V{{ i + 1 }}
+                td {{ data }}
+
+          .footer(style="padding: 0px 15px 0px 15px")
+            button.btn.btn-primary.pull-left(@click="prev", v-if="!enabled.rankedData") Prev
+            button.btn.btn-primary.pull-right(@click="getRankedData", v-if="!enabled.rankedData") Next
+          .clearfix
+
+    .col-lg-9(v-if="enabled.rankedData")
+      .card
+        .header
+          h4.title Ranking
+          p.category Dilakukan sorting terhadap hasil perhitungan sebelumnya
+        .content.table-responsive.table-full-width
+          table.table.table-hover.table-striped
+            thead
+              th Nama
+              th Harga
+              th Kalori
+              th Lemak
+              th Karbohidrat
+              th Protein
+              th Skor
+
+            tbody
+              tr(v-if="!loaded.rankedData")
+                td(colspan=6, style="text-align: center")
+                  i.fa.fa-spinner.fa-spin.fa-3x.fa-fw
+              tr(v-if="rankedData.length === 0 && loaded.rankedData")
+                td(colspan=6, style="text-align: center") Belum ada data makanan
+              tr(v-for="data in rankedData")
+                td {{ data.name }}
+                td {{ data.price }}
+                td {{ data.calories }}
+                td {{ data.fat }}
+                td {{ data.carbohydrate }}
+                td {{ data.protein }}
+                td {{ data.score }}
+
+          .footer(style="padding: 0px 15px 0px 15px")
+            button.btn.btn-primary.pull-left(@click="prev") Prev
+          .clearfix
+
+block scripts
+  script.
+    new Vue({
+      el: "#app",
+      data: {
+        fields: [
+          {
+            label: 'Harga',
+            name: 'price'
+          }, {
+            label: 'Kalori',
+            name: 'calories'
+          }, {
+            label: 'Lemak',
+            name: 'fat'
+          }, {
+            label: 'Karbohidrat',
+            name: 'carbohydrate'
+          }, {
+            label: 'Protein',
+            name: 'protein'
+          }
+        ],
+        enabled: {
+          weights: true,
+          initialData: false,
+          normalizedData: false,
+          weightedData: false,
+          idealSolutions: false,
+          separationMeasures: false,
+          relativeCloseness: false,
+          rankedData: false
+        },
+        loaded: {
+          initialData: false,
+          normalizedData: false,
+          weightedData: false,
+          idealSolutions: false,
+          separationMeasures: false,
+          relativeCloseness: false,
+          rankedData: false
+        },
+        weights: {
+          price: 1,
+          calories: 1,
+          fat: 1,
+          carbohydrate: 1,
+          protein: 1
+        },
+        initialData: [],
+        normalizedData: [],
+        weightedData: [],
+        idealSolutions: [],
+        separationMeasures: [],
+        relativeCloseness: [],
+        rankedData: [],
+        count: 0
+      },
+      methods: {
+        getInitialData() {
+          this.count += 1;
+          this.enabled.initialData = true;
+
+          fetch('/api/foods')
+            .then((res) => {
+              return res.json()
+            })
+            .then((json) => {
+              if (json.err || json.errors) {
+                this.notifyFail();
+              } else {
+                this.initialData = json;
+                this.loaded.initialData = true;
+              }
+            });
+        },
+
+        getNormalizedData() {
+          this.count += 1;
+          this.enabled.weights = false;
+          this.enabled.initialData = false;
+          this.enabled.normalizedData = true;
+
+          fetch('/api/topsis/steps/1', {
+            method: 'post',
+            headers: {
+              'Accept': 'application/json',
+              'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({initialData: this.initialData})
+          })
+          .then((res) => {
+            return res.json()
+          })
+          .then((json) => {
+            if (json.err || json.errors) {
+              this.notifyFail();
+            } else {
+              this.normalizedData = json;
+              this.loaded.normalizedData = true;
+            }
+          });
+        },
+
+        getWeightedData() {
+          this.count += 1;
+          this.enabled.normalizedData = false;
+          this.enabled.weightedData = true;
+
+          fetch('/api/topsis/steps/2', {
+            method: 'post',
+            headers: {
+              'Accept': 'application/json',
+              'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+              weights: this.weights,
+              normalizedData: this.normalizedData
+            })
+          })
+          .then((res) => {
+            return res.json()
+          })
+          .then((json) => {
+            if (json.err || json.errors) {
+              this.notifyFail();
+            } else {
+              this.weightedData = json;
+              this.loaded.weightedData = true;
+            }
+          });
+        },
+
+        getIdealSolutions() {
+          this.count += 1;
+          this.enabled.weightedData = false;
+          this.enabled.idealSolutions = true;
+
+          fetch('/api/topsis/steps/3', {
+            method: 'post',
+            headers: {
+              'Accept': 'application/json',
+              'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+              weightedData: this.weightedData
+            })
+          })
+          .then((res) => {
+            return res.json()
+          })
+          .then((json) => {
+            if (json.err || json.errors) {
+              this.notifyFail();
+            } else {
+              this.idealSolutions = json;
+              this.loaded.idealSolutions = true;
+            }
+          });
+        },
+
+        getSeparationMeasures() {
+          this.count += 1;
+          this.enabled.separationMeasures = true;
+
+          fetch('/api/topsis/steps/4', {
+            method: 'post',
+            headers: {
+              'Accept': 'application/json',
+              'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+              idealSolutions: this.idealSolutions,
+              weightedData: this.weightedData
+            })
+          })
+          .then((res) => {
+            return res.json()
+          })
+          .then((json) => {
+            if (json.err || json.errors) {
+              this.notifyFail();
+            } else {
+              this.separationMeasures = json;
+              this.loaded.separationMeasures = true;
+            }
+          });
+        },
+
+        getRelativeCloseness() {
+          this.count += 1;
+          this.enabled.separationMeasures = false;
+          this.enabled.idealSolutions = false;
+          this.enabled.relativeCloseness = true;
+
+          fetch('/api/topsis/steps/5', {
+            method: 'post',
+            headers: {
+              'Accept': 'application/json',
+              'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+              separationMeasures: this.separationMeasures,
+            })
+          })
+          .then((res) => {
+            return res.json()
+          })
+          .then((json) => {
+            if (json.err || json.errors) {
+              this.notifyFail();
+            } else {
+              this.relativeCloseness = json;
+              this.loaded.relativeCloseness = true;
+            }
+          });
+        },
+
+        getRankedData() {
+          this.count += 1;
+          this.enabled.rankedData = true;
+
+          this.rankedData = this.initialData.map((data, i) => {
+            data.score = this.relativeCloseness[i];
+            return data;
+          }).sort((x, y) => y.score - x.score);
+
+          this.loaded.rankedData = true;
+        },
+
+        notifyFail() {
+          $.notify({
+            icon: 'fa fa-times',
+            message: 'Terjadi error saat melakukan kalkulasi TOPSIS. Ulangi lagi setelah refresh'
+          },{
+            placement: {
+              from: 'top',
+              align: 'center',
+            },
+            type: 'danger',
+            delay: 3000,
+            mouse_over: 'pause'
+          });
+        },
+
+        prev() {
+          if (this.count <= 0) {
+            this.count = 0;
+          }
+
+          if (this.count >= 7) {
+            this.count = 7;
+          }
+
+          switch(this.count) {
+            case 0:
+              this.enabled = {
+                weights: true,
+                initialData: false,
+                normalizedData: false,
+                weightedData: false,
+                idealSolutions: false,
+                separationMeasures: false,
+                relativeCloseness: false,
+                rankedData: false
+              }
+              break;
+            case 1:
+              this.enabled.initialData = false;
+              break;
+            case 2:
+              this.enabled.weights = true;
+              this.enabled.initialData = true;
+              this.enabled.normalizedData = false;
+              break;
+            case 3:
+              this.enabled.normalizedData = true;
+              this.enabled.weightedData = false;
+              break;
+            case 4:
+              this.enabled.weightedData = true;
+              this.enabled.idealSolutions = false;
+              break;
+            case 5:
+              this.enabled.separationMeasures = false;
+              break;
+            case 6:
+              this.enabled.separationMeasures = true;
+              this.enabled.idealSolutions = true;
+              this.enabled.relativeCloseness = false;
+              break;
+            case 7:
+              this.enabled.rankedData = false;
+              break;
+          }
+
+          this.count -= 1;
+        }
+      }
+    });

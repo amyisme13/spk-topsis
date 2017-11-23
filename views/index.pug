@@ -1,0 +1,139 @@
+extends layout
+
+block content
+  .row
+    .col-md-6
+      .card
+        .header
+          h4.title Pilihan
+        .content
+          form(@submit.prevent="calculate")
+            .row(v-for="field in fields")
+              .col-md-12
+                .form-group
+                  label {{ field.label }}
+                  select.form-control(v-model="weights[field.name]")
+                    option(value= 4 * (1/4)) Sangat Penting
+                    option(value= 3 * (1/4)) Penting
+                    option(value= 2 * (1/4)) Cukup Penting
+                    option(value= 1 * (1/4)) Tidak Penting
+                    option(value= 0 * (1/4)) Sangat Tidak Penting
+            button.btn.btn-primary.btn-block Submit
+
+    .col-md-6
+      .card
+        .header
+          h4.title Rekomendasi Makanan
+        .content.table-responsive.table-full-width
+          table.table.table-hover.table-striped
+            thead
+              th Nama
+              th Skor
+              th Detail
+            tbody
+              tr(v-if="!loaded")
+                td(colspan="3", style="text-align:center")
+                  i.fa.fa-spinner.fa-spin.fa-3x.fa-fw
+              tr(v-if="results.length === 0 && loaded")
+                td(colspan="3", style="text-align:center") Isi pilihan disamping
+              tr(v-for="result in results")
+                td {{ result.name }}
+                td {{ result.result }}
+                td
+                  a.btn.btn-secondary
+                    i.fa.fa-share
+
+block scripts
+  script.
+    new Vue({
+      el: '#app',
+      data: {
+        fields: [
+          {
+            label: 'Harga',
+            name: 'price'
+          },
+          {
+            label: 'Kalori',
+            name: 'calories'
+          },
+          {
+            label: 'Lemak',
+            name: 'fat'
+          },
+          {
+            label: 'Karbohidrat',
+            name: 'carbohydrate'
+          },
+          {
+            label: 'Protein',
+            name: 'protein'
+          },
+        ],
+        weights: {
+          price: 1,
+          calories: 1,
+          fat: 1,
+          carbohydrate: 1,
+          protein: 1
+        },
+        results: [],
+        loaded: true
+      },
+      methods: {
+        calculate() {
+          this.loaded = false;
+          this.results = [];
+          fetch('/api/topsis', {
+            method: 'post',
+            headers: {
+              'Accept': 'application/json',
+              'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(this.weights)
+          })
+          .then((res) => {
+            return res.json();
+          })
+          .then((json) => {
+            if (json.err || json.errors) {
+              this.notifyFail();
+            } else {
+              this.notifySuccess();
+
+              this.loaded = true;
+              this.results = json;
+            }
+          })
+        },
+
+        notifySuccess() {
+          $.notify({
+            icon: 'fa fa-check',
+            message: 'Berhasil mengkalkulasi'
+          },{
+            placement: {
+              from: 'top',
+              align: 'center',
+            },
+            type: 'info',
+            delay: 3000
+          });
+        },
+
+        notifyFail() {
+          $.notify({
+            icon: 'fa fa-times',
+            message: 'Terjadi error saat melakukan kalkulasi TOPSIS. Ulangi lagi'
+          },{
+            placement: {
+              from: 'top',
+              align: 'center',
+            },
+            type: 'danger',
+            delay: 3000,
+            mouse_over: 'pause'
+          });
+        }
+      }
+    })
