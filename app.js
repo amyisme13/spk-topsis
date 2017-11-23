@@ -13,7 +13,7 @@ const foods = require('./routes/api/foods');
 const topsis = require('./routes/api/topsis');
 
 // Setup mongoose
-mongoose.connect('mongodb://localhost/spk', {
+mongoose.connect(process.env.MONGODB_URI, {
     useMongoClient: true
 });
 mongoose.Promise = global.Promise;
