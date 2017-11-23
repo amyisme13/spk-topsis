@@ -5,9 +5,12 @@ const Food = require('../../models/food');
 
 router.get('/', async (req, res) => {
     try {
+        console.log('test');
         const foods = await Food.find().exec();
+        console.log('test2');
         res.json(foods);
     } catch (err) {
+        console.log('test3');
         res.send(500, { err: err.message });
     }
 });
