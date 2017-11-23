@@ -1,0 +1,304 @@
+[
+    {
+        "name": "Nasi sop ayam",
+        "price": 10000,
+        "calories": 279,
+        "fat": 2.9,
+        "carbohydrate": 53.43,
+        "protein": 8.25,
+        "source": "https://www.fatsecret.co.id/kalori-gizi/umum/sup-ayam"
+    },
+    {
+        "name": "Nasi soto babat",
+        "price": 10000,
+        "calories": 423,
+        "fat": 11.95,
+        "carbohydrate": 54.85,
+        "protein": 22.45,
+        "source": "https://www.fatsecret.co.id/kalori-gizi/umum/soto-daging"
+    },
+    {
+        "name": "Nasi laksa",
+        "price": 10000,
+        "calories": 499,
+        "fat": 11.6,
+        "carbohydrate": 88.4,
+        "protein": 8.2,
+        "source":
+            "http://www.organisasi.org/1970/01/isi-kandungan-gizi-laksa-komposisi-nutrisi-bahan-makanan.html#.WhLThUqWZPY"
+    },
+    {
+        "name": "Nasi ayam kecap",
+        "price": 10000,
+        "calories": 735,
+        "fat": 22.6,
+        "carbohydrate": 94.23,
+        "protein": 38.1,
+        "source":
+            "https://www.fatsecret.co.id/kalori-gizi/umum/daging-ayam-(panggang-bakar-dimasak)"
+    },
+    {
+        "name": "Nasi ayam lodho",
+        "price": 10000,
+        "calories": 417,
+        "fat": 12.2,
+        "carbohydrate": 45.59,
+        "protein": 28.16,
+        "source": "https://www.fatsecret.co.id/kalori-gizi/umum/kaldu-ayam"
+    },
+    {
+        "name": "Nasi rempelo hati kecap",
+        "price": 10000,
+        "calories": 460,
+        "fat": 5.27,
+        "carbohydrate": 78.08,
+        "protein": 22.12,
+        "source": "https://www.fatsecret.co.id/kalori-gizi/umum/hati-ayam"
+    },
+    {
+        "name": "Nasi ayam pedas",
+        "price": 10000,
+        "calories": 645,
+        "fat": 25.26,
+        "carbohydrate": 66.23,
+        "protein": 38.1,
+        "source":
+            "https://www.fatsecret.co.id/kalori-gizi/umum/daging-ayam-(panggang-bakar-dimasak)"
+    },
+    {
+        "name": "Nasi ayam srundeng",
+        "price": 10000,
+        "calories": 949,
+        "fat": 55.75,
+        "carbohydrate": 75.46,
+        "protein": 40.43,
+        "source": "https://www.fatsecret.co.id/kalori-gizi/umum/kelapa"
+    },
+    {
+        "name": "Gado - gado",
+        "price": 10000,
+        "calories": 318,
+        "fat": 17.86,
+        "carbohydrate": 26.28,
+        "protein": 17.22,
+        "source": "https://www.fatsecret.co.id/kalori-gizi/umum/gado-gado"
+    },
+    {
+        "name": "Mie goreng / kuah",
+        "price": 4000,
+        "calories": 420,
+        "fat": 16,
+        "carbohydrate": 60,
+        "protein": 8,
+        "source":
+            "https://www.fatsecret.co.id/kalori-gizi/indomie/rasa-ayam-spesial/1-porsi"
+    },
+    {
+        "name": "Nasi campur (telur ayam)",
+        "price": 9000,
+        "calories": 364,
+        "fat": 8.13,
+        "carbohydrate": 57.8,
+        "protein": 13.23,
+        "source":
+            "https://www.fatsecret.co.id/kalori-gizi/umum/sayuran-campur-(jagung-kacang-lima-kacang-polong-kacang-hijau-wortel)-(tanpa-tambahan-garam-kaleng)"
+    },
+    {
+        "name": "Nasi ayam geprek",
+        "price": 10000,
+        "calories": 673,
+        "fat": 25.34,
+        "carbohydrate": 72.19,
+        "protein": 38.91,
+        "source":
+            "https://www.fatsecret.co.id/kalori-gizi/umum/daging-ayam-(panggang-bakar-dimasak)"
+    },
+    {
+        "name": "Lalapan tahu + tempe",
+        "price": 6500,
+        "calories": 323,
+        "fat": 8.34,
+        "carbohydrate": 53.23,
+        "protein": 9.43,
+        "source": "https://www.fatsecret.co.id/kalori-gizi/umum/tempe-goreng"
+    },
+    {
+        "name": "Lalapan telur",
+        "price": 8000,
+        "calories": 347,
+        "fat": 10.77,
+        "carbohydrate": 50.5,
+        "protein": 11.68,
+        "source": "https://www.fatsecret.co.id/kalori-gizi/umum/telur-dadar"
+    },
+    {
+        "name": "Lalapan pelo ati",
+        "price": 9000,
+        "calories": 370,
+        "fat": 8.27,
+        "carbohydrate": 50.08,
+        "protein": 22.12,
+        "source": "https://www.fatsecret.co.id/kalori-gizi/umum/hati-ayam"
+    },
+    {
+        "name": "Lalapan lele",
+        "price": 9000,
+        "calories": 496,
+        "fat": 17.66,
+        "carbohydrate": 55.98,
+        "protein": 27.06,
+        "source": "https://www.fatsecret.co.id/kalori-gizi/umum/pecel-lele"
+    },
+    {
+        "name": "Lalapan ayam",
+        "price": 10000,
+        "calories": 645,
+        "fat": 25.26,
+        "carbohydrate": 66.23,
+        "protein": 38.1,
+        "source": "https://www.fatsecret.co.id/kalori-gizi/umum/ayam-goreng"
+    },
+    {
+        "name": "Pecel",
+        "price": 8000,
+        "calories": 434,
+        "fat": 9.33,
+        "carbohydrate": 75.82,
+        "protein": 10.78,
+        "source": "https://www.fatsecret.co.id/kalori-gizi/umum/nasi-pecel"
+    },
+    {
+        "name": "Bening / lodeh",
+        "price": 7000,
+        "calories": 260,
+        "fat": 1.2,
+        "carbohydrate": 56.22,
+        "protein": 6.22,
+        "source":
+            "https://www.fatsecret.co.id/kalori-gizi/umum/sup-sayur-(rendah-sodium-dengan-air)"
+    },
+    {
+        "name": "Tahu isi",
+        "price": 2500,
+        "calories": 134,
+        "fat": 6.64,
+        "carbohydrate": 8.65,
+        "protein": 10.25,
+        "source": "https://www.fatsecret.co.id/kalori-gizi/umum/tahu-isi"
+    },
+    {
+        "name": "Tahu telur",
+        "price": 10000,
+        "calories": 520,
+        "fat": 26.51,
+        "carbohydrate": 52.12,
+        "protein": 20.94,
+        "source":
+            "https://www.fatsecret.co.id/kalori-gizi/umum/selai-kacang-halus-(dengan-garam)?portionid=37673&portionamount=2.000"
+    },
+    {
+        "name": "Bakso penyet",
+        "price": 9500,
+        "calories": 375,
+        "fat": 11.33,
+        "carbohydrate": 50.44,
+        "protein": 14.61,
+        "source":
+            "https://www.fatsecret.co.id/kalori-gizi/umum/bakso-daging-sapi"
+    },
+    {
+        "name": "Ayam kuah",
+        "price": 10500,
+        "calories": 527,
+        "fat": 22.48,
+        "carbohydrate": 56.98,
+        "protein": 22.46,
+        "source": "https://www.fatsecret.co.id/kalori-gizi/umum/ayam-goreng"
+    },
+    {
+        "name": "Ayam krispi",
+        "price": 10000,
+        "calories": 394,
+        "fat": 12.48,
+        "carbohydrate": 54.52,
+        "protein": 14.18,
+        "source":
+            "https://www.fatsecret.co.id/kalori-gizi/umum/rawon?portionid=8730600&portionamount=1.000"
+    },
+    {
+        "name": "Rawon",
+        "price": 11000,
+        "calories": 492,
+        "fat": 18.28,
+        "carbohydrate": 52.46,
+        "protein": 27.13,
+        "source":
+            "https://www.fatsecret.co.id/kalori-gizi/umum/rawon?portionid=8730600&portionamount=1.000"
+    },
+    {
+        "name": "Bali telur + tahu",
+        "price": 9000,
+        "calories": 308,
+        "fat": 7.61,
+        "carbohydrate": 46.07,
+        "protein": 11.81,
+        "source":
+            "https://www.fatsecret.co.id/kalori-gizi/umum/telur-goreng?portionid=11277&portionamount=1.000"
+    },
+    {
+        "name": "Cwie mie",
+        "price": 9000,
+        "calories": 217,
+        "fat": 0,
+        "carbohydrate": 0,
+        "protein": 0,
+        "source": "https://www.fatsecret.co.id/Diary.aspx?pa=fjrd&rid=6261444"
+    },
+    {
+        "name": "Nasi soto ayam",
+        "price": 10000,
+        "calories": 516,
+        "fat": 15.36,
+        "carbohydrate": 63.63,
+        "protein": 28.21,
+        "source":
+            "https://www.fatsecret.co.id/kalori-gizi/umum/soto-ayam?portionid=5702664&portionamount=1.000"
+    },
+    {
+        "name": "Nasi goreng",
+        "price": 10000,
+        "calories": 250,
+        "fat": 9.28,
+        "carbohydrate": 31.38,
+        "protein": 9.39,
+        "source":
+            "https://www.fatsecret.co.id/kalori-gizi/umum/nasi-goreng?portionid=18686&portionamount=1.000"
+    },
+    {
+        "name": "Tempe menjes",
+        "price": 1000,
+        "calories": 6.51,
+        "fat": 0.2,
+        "carbohydrate": 11.94,
+        "protein": 3.41,
+        "source": "https://www.fatsecret.co.id/kalori-gizi/umum/sosis-ayam"
+    },
+    {
+        "name": "Gorengan sosis mie goreng",
+        "price": 2500,
+        "calories": 49,
+        "fat": 2.83,
+        "carbohydrate": 0.43,
+        "protein": 5.05,
+        "source": "https://www.fatsecret.co.id/kalori-gizi/umum/sosis-ayam"
+    },
+    {
+        "name": "Tahu bakso",
+        "price": 3000,
+        "calories": 134,
+        "fat": 6.64,
+        "carbohydrate": 8.65,
+        "protein": 10.25,
+        "source": "https://www.fatsecret.co.id/kalori-gizi/umum/tahu-goreng"
+    }
+]
