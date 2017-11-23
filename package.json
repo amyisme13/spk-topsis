@@ -2,6 +2,9 @@
   "name": "spk-rekom",
   "version": "1.0.0",
   "private": true,
+  "engines": {
+      "node": "8.9.*"
+  },
   "scripts": {
     "start": "node ./bin/www",
     "debug-win": "set DEBUG=* && node ./bin/www"
